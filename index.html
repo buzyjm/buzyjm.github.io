@@ -33,26 +33,22 @@
     padding: 0;
   }
 
-  .collapsible-summary {
+  .collapsible-header {
     cursor: pointer;
     font-weight: bold;
-    list-style: none;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
   }
 
-  .collapsible-summary::marker {
-    display: none;
-  }
-
-  .collapsible-summary::after {
-    content: "▸";
-    font-size: 0.7em;
-    display: inline-block;
-    margin-left: 4px;
+  .collapsible-icon {
+    width: 10px;
+    height: 10px;
     transition: transform 0.3s ease;
   }
 
-  .collapsible-wrapper.open .collapsible-summary::after {
+  .collapsible-wrapper.open .collapsible-icon {
     transform: rotate(90deg);
   }
 
@@ -68,7 +64,12 @@
 </style>
 
 <div class="collapsible-wrapper" id="aboutMore">
-  <div class="collapsible-summary">More about me</div>
+  <div class="collapsible-header">
+    <svg class="collapsible-icon" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M5.5 3.5L10.5 8L5.5 12.5V3.5Z"/>
+    </svg>
+    <span>More about me</span>
+  </div>
   <div class="collapsible-content">
     <div class="collapsible-inner">
       <p>
@@ -81,18 +82,18 @@
 
 <script>
   const wrapper = document.getElementById("aboutMore");
-  const summary = wrapper.querySelector(".collapsible-summary");
+  const header = wrapper.querySelector(".collapsible-header");
   const content = wrapper.querySelector(".collapsible-content");
 
   let isOpen = false;
 
-  summary.addEventListener("click", () => {
+  header.addEventListener("click", () => {
     if (!isOpen) {
       const innerHeight = content.querySelector('.collapsible-inner').scrollHeight;
       content.style.height = innerHeight + "px";
       wrapper.classList.add("open");
     } else {
-      content.style.height = content.scrollHeight + "px"; // set current height before collapse
+      content.style.height = content.scrollHeight + "px";
       requestAnimationFrame(() => {
         content.style.height = "0px";
       });
@@ -101,13 +102,13 @@
     isOpen = !isOpen;
   });
 
-  // optional: reset height to 'auto' after animation ends
   content.addEventListener("transitionend", () => {
     if (isOpen) {
       content.style.height = "auto";
     }
   });
 </script>
+
 
                 <p style="text-align:center">
                   <a href="mailto:t330026211@mail.uic.edu.cn">Email</a> &nbsp;/&nbsp;
