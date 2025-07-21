@@ -12,19 +12,35 @@
     
   </head>
   <style>
-  .collapsible {
-    overflow: hidden;
-    transition: max-height 0.5s ease;
-    max-height: 0;
+  .details-container {
+    position: relative;
   }
 
-  details[open] .collapsible {
-    max-height: 300px; /* 足够大以容纳内容 */
+  .details-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+  }
+
+  .details-toggle[open] .details-content {
+    opacity: 1;
+    transform: scaleY(1);
   }
 
   summary {
     cursor: pointer;
     font-weight: bold;
+    display: inline-block;
     list-style: none;
   }
 
@@ -33,13 +49,15 @@
   }
 
   summary::after {
-    content: " ▼";
+    content: " ▾";
+    font-size: 0.7em;
     transition: transform 0.3s ease;
     display: inline-block;
+    margin-left: 4px;
   }
 
-  details[open] summary::after {
-    transform: rotate(-180deg);
+  .details-toggle[open] summary::after {
+    transform: rotate(180deg);
   }
 </style>
 
@@ -57,10 +75,10 @@
 		I'm an undergraduate student <a href="https://www.uic.edu.cn/en/">@Beijing Normal-Hong Kong Baptist University</a> in Zhuhai, China.
 		<br>I'm also a research intern <a href="https://cfcs.pku.edu.cn/english/research/researchlabs/237027.htm">@PKU-Agibot Lab</a>, advised by <a href="https://zsdonghao.github.io/">Prof. Hao Dong.</a>
                 </p>
-		<details>
+		<details class="details-toggle details-container">
 		  <summary>More about me</summary>
-		  <div class="collapsible">
-		    <p style="margin-top: 10px;">
+		  <div class="details-content">
+		    <p>
 		      I'm passionate about robotic manipulation, imitation learning, and building intelligent systems that can interact with the physical world. 
 		      <br>Outside of academics, I enjoy photography, trail running, and reading science fiction.
 		    </p>
