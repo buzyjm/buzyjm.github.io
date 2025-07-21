@@ -11,6 +11,37 @@
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     
   </head>
+  <style>
+  .collapsible {
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    max-height: 0;
+  }
+
+  details[open] .collapsible {
+    max-height: 300px; /* 足够大以容纳内容 */
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+    list-style: none;
+  }
+
+  summary::marker {
+    display: none;
+  }
+
+  summary::after {
+    content: " ▼";
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+
+  details[open] summary::after {
+    transform: rotate(-180deg);
+  }
+</style>
 
   <body>
     <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
@@ -27,11 +58,13 @@
 		<br>I'm also a research intern @ <a href="https://cfcs.pku.edu.cn/english/research/researchlabs/237027.htm">@PKU-Agibot Lab</a>, advised by <a href="https://zsdonghao.github.io/">Prof. Hao Dong.</a>
                 </p>
 		<details>
-  			<summary style="cursor: pointer; font-weight: bold;">More about me</summary>
-  				<p style="margin-top: 10px;">
-    				I'm passionate about robotic manipulation, imitation learning, and building intelligent systems that can interact with the physical world. 
-    				<br>Outside of academics, I enjoy photography, trail running, and reading science fiction.
-  				</p>
+		  <summary>More about me</summary>
+		  <div class="collapsible">
+		    <p style="margin-top: 10px;">
+		      I'm passionate about robotic manipulation, imitation learning, and building intelligent systems that can interact with the physical world. 
+		      <br>Outside of academics, I enjoy photography, trail running, and reading science fiction.
+		    </p>
+		  </div>
 		</details>
                 <p style="text-align:center">
                   <a href="mailto:t330026211@mail.uic.edu.cn">Email</a> &nbsp;/&nbsp;
