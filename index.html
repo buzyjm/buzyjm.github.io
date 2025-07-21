@@ -11,55 +11,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     
   </head>
-  <style>
-  .details-container {
-    position: relative;
-  }
-
-  .details-content {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: white;
-    border: 1px solid #ddd;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 10;
-  }
-
-  .details-toggle[open] .details-content {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-
-  summary {
-    cursor: pointer;
-    font-weight: bold;
-    display: inline-block;
-    list-style: none;
-  }
-
-  summary::marker {
-    display: none;
-  }
-
-  summary::after {
-    content: " ▾";
-    font-size: 0.7em;
-    transition: transform 0.3s ease;
-    display: inline-block;
-    margin-left: 4px;
-  }
-
-  .details-toggle[open] summary::after {
-    transform: rotate(180deg);
-  }
-</style>
+  
 
   <body>
     <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
@@ -75,15 +27,88 @@
 		I'm an undergraduate student <a href="https://www.uic.edu.cn/en/">@Beijing Normal-Hong Kong Baptist University</a> in Zhuhai, China.
 		<br>I'm also a research intern <a href="https://cfcs.pku.edu.cn/english/research/researchlabs/237027.htm">@PKU-Agibot Lab</a>, advised by <a href="https://zsdonghao.github.io/">Prof. Hao Dong.</a>
                 </p>
-		<details class="details-toggle details-container">
-		  <summary>More about me</summary>
-		  <div class="details-content">
-		    <p>
-		      I'm passionate about robotic manipulation, imitation learning, and building intelligent systems that can interact with the physical world. 
-		      <br>Outside of academics, I enjoy photography, trail running, and reading science fiction.
-		    </p>
-		  </div>
-		</details>
+		<style>
+  .collapsible-wrapper {
+    border: none;
+    padding: 0;
+  }
+
+  .collapsible-summary {
+    cursor: pointer;
+    font-weight: bold;
+    list-style: none;
+    display: inline-block;
+  }
+
+  .collapsible-summary::marker {
+    display: none;
+  }
+
+  .collapsible-summary::after {
+    content: "▸";
+    font-size: 0.7em;
+    display: inline-block;
+    margin-left: 4px;
+    transition: transform 0.3s ease;
+  }
+
+  .collapsible-wrapper.open .collapsible-summary::after {
+    transform: rotate(90deg);
+  }
+
+  .collapsible-content {
+    overflow: hidden;
+    transition: height 0.3s ease;
+    height: 0;
+  }
+
+  .collapsible-inner {
+    padding-top: 10px;
+  }
+</style>
+
+<div class="collapsible-wrapper" id="aboutMore">
+  <div class="collapsible-summary">More about me</div>
+  <div class="collapsible-content">
+    <div class="collapsible-inner">
+      <p>
+        I'm passionate about robotic manipulation, imitation learning, and building intelligent systems that can interact with the physical world. 
+        <br>Outside of academics, I enjoy photography, trail running, and reading science fiction.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const wrapper = document.getElementById("aboutMore");
+  const summary = wrapper.querySelector(".collapsible-summary");
+  const content = wrapper.querySelector(".collapsible-content");
+
+  let isOpen = false;
+
+  summary.addEventListener("click", () => {
+    if (!isOpen) {
+      const innerHeight = content.querySelector('.collapsible-inner').scrollHeight;
+      content.style.height = innerHeight + "px";
+      wrapper.classList.add("open");
+    } else {
+      content.style.height = content.scrollHeight + "px"; // set current height before collapse
+      requestAnimationFrame(() => {
+        content.style.height = "0px";
+      });
+      wrapper.classList.remove("open");
+    }
+    isOpen = !isOpen;
+  });
+
+  // optional: reset height to 'auto' after animation ends
+  content.addEventListener("transitionend", () => {
+    if (isOpen) {
+      content.style.height = "auto";
+    }
+  });
+</script>
+
                 <p style="text-align:center">
                   <a href="mailto:t330026211@mail.uic.edu.cn">Email</a> &nbsp;/&nbsp;
 <!--                   <a href="data/JonBarron-CV.pdf">CV</a> &nbsp;/&nbsp; -->
