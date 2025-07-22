@@ -54,8 +54,9 @@
 
   .collapsible-content {
     overflow: hidden;
-    transition: height 0.3s ease;
-    height: 0;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+    display: grid; /* prevent collapse layout bug */
   }
 
   .collapsible-inner {
@@ -88,26 +89,20 @@
   let isOpen = false;
 
   header.addEventListener("click", () => {
+    const inner = content.querySelector('.collapsible-inner');
+    const innerHeight = inner.scrollHeight;
+
     if (!isOpen) {
-      const innerHeight = content.querySelector('.collapsible-inner').scrollHeight;
-      content.style.height = innerHeight + "px";
+      content.style.maxHeight = innerHeight + "px";
       wrapper.classList.add("open");
     } else {
-      content.style.height = content.scrollHeight + "px";
-      requestAnimationFrame(() => {
-        content.style.height = "0px";
-      });
+      content.style.maxHeight = "0px";
       wrapper.classList.remove("open");
     }
     isOpen = !isOpen;
   });
-
-  content.addEventListener("transitionend", () => {
-    if (isOpen) {
-      content.style.height = "auto";
-    }
-  });
 </script>
+
 
 
                 <p style="text-align:center">
