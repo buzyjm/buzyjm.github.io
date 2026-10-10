@@ -263,19 +263,23 @@ details.more p {
 
 .pub-card {
   display: flex;
-  flex-direction: column;
+  gap: 18px;
+  padding: 16px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--bg-subtle);
+}
+
+.pub-media {
+  flex: 0 0 240px;
+  align-self: flex-start;
+  border-radius: 8px;
   overflow: hidden;
-}
-
-.pub-image {
   background: var(--chip-bg);
-  border-bottom: 1px solid var(--border);
 }
 
-.pub-image img {
+.pub-media video,
+.pub-media img {
   display: block;
   width: 100%;
   height: auto;
@@ -283,7 +287,6 @@ details.more p {
 
 .pub-body {
   min-width: 0;
-  padding: 16px;
 }
 
 .pub-title {
@@ -291,7 +294,8 @@ details.more p {
   margin: 0 0 4px;
 }
 
-.pub-authors {
+.pub-authors,
+.pub-desc {
   margin: 0 0 4px;
   color: var(--text-muted);
   font-size: 14px;
@@ -401,5 +405,24 @@ details.more p {
 
   .links {
     justify-content: center;
+  }
+
+  /* Float the media so the text wraps under it instead of leaving a gap
+     beside a short video in a tall, narrow text column. */
+  .pub-card {
+    display: block;
+    padding: 12px;
+  }
+
+  .pub-media {
+    float: left;
+    width: 42%;
+    margin: 0 12px 8px 0;
+  }
+
+  .pub-body::after {
+    content: '';
+    display: block;
+    clear: both;
   }
 }
