@@ -30,13 +30,12 @@
         <div class="intro-text">
           <h1 class="name">Jingming Zhang &nbsp;<span class="zh">张景鸣</span></h1>
           <p class="bio">
-            I'm a senior undergraduate student <a href="https://www.uic.edu.cn/en/">@Beijing Normal-Hong Kong Baptist University</a> in Zhuhai, China.
+            I'm a senior undergraduate student <a href="https://www.uic.edu.cn/en/">@Beijing Normal-Hong Kong Baptist University</a><span class="note"><button class="note-btn" type="button" aria-expanded="false" aria-controls="note-bnbu-1" aria-label="About my degree">i</button><span class="note-pop" id="note-bnbu-1" role="dialog" aria-label="About my degree">Co-founded by <a href="https://english.bnu.edu.cn/">Beijing Normal University</a> and <a href="https://www.hkbu.edu.hk/">Hong Kong Baptist University</a>. Bachelor's degrees are awarded by Hong Kong Baptist University.</span></span> in Zhuhai, China, working with <a href="https://www.bnbu.edu.cn/en/faculty.htm#/goliathli/en">Dr. Zhiyuan Li</a>.
             <br>
             I'm currently a visiting intern <a href="https://www.cmu.edu/">@Carnegie Mellon University</a>, advised by <a href="https://www.cmu.edu/cbd/people/xu.html">Prof. Min Xu</a>, where I work on automation and safety for robots in laboratory settings.
-            <br>
             I also work closely with <a href="https://www.ece.cmu.edu/directory/bios/zhang-xu.html">Prof. Xu Zhang</a> on tactile sensing for robots.
             <br>
-            Previously, I interned <a href="http://www.ateam.xin/#/">@ATeam</a>, advised by <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html">Prof. Xiaodan Liang</a>, and <a href="https://cfcs.pku.edu.cn/english/research/researchlabs/40qyjsyjzxyw237027.htm">@PKU-Agibot Lab</a>, advised by <a href="https://zsdonghao.github.io/">Prof. Hao Dong</a>.
+            Previously, I interned <a href="https://huggingface.co/spatialtemporal-ai">@SpatialTemporal AI</a>, advised by <a href="https://www.sysu-hcp.net/faculty/xiaodanliang.html">Prof. Xiaodan Liang</a>, and <a href="https://cfcs.pku.edu.cn/english/research/researchlabs/40qyjsyjzxyw237027.htm">@PKU-Agibot Lab</a>, advised by <a href="https://zsdonghao.github.io/">Prof. Hao Dong</a>.
           </p>
 
           <!--
@@ -111,7 +110,7 @@
           </li>
           <li>
             <span class="tl-when">Aug 2025 – Oct 2025</span>
-            <p class="tl-title">Research Intern, ATeam</p>
+            <p class="tl-title">Research Intern, SpatialTemporal AI</p>
             <p class="tl-desc">Advised by Prof. Xiaodan Liang.</p>
           </li>
           <li>
@@ -121,7 +120,7 @@
           </li>
           <li>
             <span class="tl-when">Sep 2023 – Present</span>
-            <p class="tl-title">B.Sc., Beijing Normal-Hong Kong Baptist University</p>
+            <p class="tl-title">B.Sc., Beijing Normal-Hong Kong Baptist University<span class="note"><button class="note-btn" type="button" aria-expanded="false" aria-controls="note-bnbu-2" aria-label="About my degree">i</button><span class="note-pop" id="note-bnbu-2" role="dialog" aria-label="About my degree">Co-founded by <a href="https://english.bnu.edu.cn/">Beijing Normal University</a> and <a href="https://www.hkbu.edu.hk/">Hong Kong Baptist University</a>. Bachelor's degrees are awarded by Hong Kong Baptist University.</span></span></p>
             <p class="tl-desc">Zhuhai, China.</p>
           </li>
         </ol>
@@ -146,6 +145,47 @@
         var next = currentTheme() === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
+      });
+
+      /* Footnote popovers: click to toggle, click outside or Esc to close. */
+      var notes = Array.prototype.slice.call(document.querySelectorAll('.note'));
+
+      function closeNotes(except) {
+        notes.forEach(function (n) {
+          if (n === except) return;
+          n.classList.remove('is-open', 'flip');
+          n.querySelector('.note-btn').setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      notes.forEach(function (n) {
+        var btn = n.querySelector('.note-btn');
+        var pop = n.querySelector('.note-pop');
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var open = !n.classList.contains('is-open');
+          closeNotes(n);
+          n.classList.toggle('is-open', open);
+          btn.setAttribute('aria-expanded', String(open));
+          if (open) {
+            /* Keep the card inside the viewport on narrow screens. */
+            n.classList.remove('flip');
+            var r = pop.getBoundingClientRect();
+            if (r.right > window.innerWidth - 12) n.classList.add('flip');
+          }
+        });
+        pop.addEventListener('click', function (e) { e.stopPropagation(); });
+        n.addEventListener('mouseenter', function () {
+          if (n.classList.contains('is-open')) return;
+          n.classList.remove('flip');
+          var r = pop.getBoundingClientRect();
+          if (r.right > window.innerWidth - 12) n.classList.add('flip');
+        });
+      });
+
+      document.addEventListener('click', function () { closeNotes(null); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeNotes(null);
       });
     </script>
   </body>

@@ -426,3 +426,104 @@ details.more p {
     clear: both;
   }
 }
+
+/* ---------------------------------------------------------------- */
+/* Footnote popover                                                   */
+/* ---------------------------------------------------------------- */
+.note {
+  position: relative;
+  display: inline-block;
+  margin-left: 3px;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.note-btn {
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--accent);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 10px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.note-btn:hover,
+.note-btn:focus-visible,
+.note.is-open .note-btn {
+  background: var(--accent);
+  color: var(--bg);
+  outline: none;
+}
+
+.note-pop {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 20;
+  width: max-content;
+  max-width: min(22rem, calc(100vw - 48px));
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow: var(--card-shadow), 0 8px 24px rgba(16, 24, 40, 0.12);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.note-pop::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  transform: rotate(45deg);
+}
+
+.note.flip .note-pop {
+  left: auto;
+  right: 0;
+}
+
+.note.flip .note-pop::before {
+  left: auto;
+  right: 2px;
+}
+
+/* Invisible bridge so the pointer can travel from the badge into the card. */
+.note-pop::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+.note.is-open .note-pop {
+  display: block;
+}
+
+/* Hover-capable devices (desktop): show on hover; touch devices tap instead. */
+@media (hover: hover) {
+  .note:hover .note-pop {
+    display: block;
+  }
+}
